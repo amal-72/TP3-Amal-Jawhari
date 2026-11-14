@@ -17,14 +17,18 @@ public class GuideTouristiqueResource {
      * Retourne les informations touristiques de la ville ou du pays.
      *
      * @param villeOuPays nom de la ville ou du pays
+     * @param nb nombre d'endroits à visiter
      * @return les informations touristiques générées par le LLM
      */
     @GET
-    @Path("lieu/{ville_ou_pays}")
+    @Path("lieu/{ville_ou_pays}/{nb}")
     @Produces("application/json")
     public String endroitsDeVisite(
-            @PathParam("ville_ou_pays") String villeOuPays) {
+            @PathParam("ville_ou_pays") String villeOuPays,
+            @PathParam("nb") int nb) {
 
-        return llmClient.chat(villeOuPays);
+        return llmClient.chat(
+                "Donne " + nb + " endroits à visiter à " + villeOuPays
+        );
     }
 }
