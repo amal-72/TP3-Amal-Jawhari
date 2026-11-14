@@ -4,8 +4,10 @@ import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.request.ResponseFormat;
 import dev.langchain4j.model.google.genai.GoogleGenAiChatModel;
 import dev.langchain4j.service.AiServices;
+import dev.langchain4j.service.Result;
 import jakarta.enterprise.context.Dependent;
 
 import java.io.Serializable;
@@ -25,6 +27,7 @@ public class LlmClient implements Serializable {
         ChatModel model = GoogleGenAiChatModel.builder()
                 .apiKey(apiKey)
                 .modelName("gemini-3.5-flash-lite")
+                .responseFormat(ResponseFormat.JSON)
                 .build();
 
         chatMemory = MessageWindowChatMemory.withMaxMessages(20);
@@ -57,7 +60,7 @@ public class LlmClient implements Serializable {
                 .build();
     }
 
-    public String chat(String prompt) {
+    public Result<InfosTouristiques> informationsTouristiques(String prompt) {
         return assistant.informationsTouristiques(prompt);
     }
 }
